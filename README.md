@@ -9,8 +9,8 @@ This test will be about programming skills of course, but also about it will dem
 Here's how the test will go:
  - You'll be given a list of tasks by the manager that needs to be done and a git branch where to checkout from.
  - Each task must be on a different branch named with "task_" + your c9.io username and the number of the task (ex: task_johndoe_E1)
- - You must push your branch
- - Write to your test manager when everything is do
+ - You must push your branches
+ - Write to your test manager when everything is done
  
 At any time the test manager can enter the workspace and have a look about what your doing. You can also always ask him questions when something isn't clear.
 

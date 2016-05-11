@@ -2,11 +2,15 @@
 
 // MySQL configurations
 return [
-    'db.options' => [
+    'mysql-db.options' => [
         'driver' => 'pdo_mysql',
         'dbhost' => '127.0.0.1',
-        'dbname' => 'hiring-test',
+        'dbname' => 'ssense-test',
         'user' => 'root',
         'password' => '',
+    ],
+    'redis-cache.options' => [
+        'host' => '127.0.0.1',
+        'port' => 6379
     ]
 ];

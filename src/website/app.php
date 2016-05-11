@@ -12,22 +12,22 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../../vendor/be/autoload.php';
 
 // Application configurations
-require_once __DIR__ . '/../../configs/application.php';
+require_once __DIR__ . '/../../config/application.php';
 
 // Create the application
 $app = new Application();
 
 // Register the routing into the application
 $app->register(
-    new ConfigServiceProvider(__DIR__ . '/../../configs/routes.php')
+    new ConfigServiceProvider(__DIR__ . '/../../config/routes.php')
 );
 $app->register(new RoutingServiceProvider('routing.routes'));
 
 // Initiate MySQL databse connexion
 $app->register(
-    new ConfigServiceProvider(__DIR__ . '/../../configs/mysql.php')
+    new ConfigServiceProvider(__DIR__ . '/../../config/databases.php')
 );
-$app->register(new Silex\Provider\DoctrineServiceProvider(), $app['db.options']);
+$app->register(new Silex\Provider\DoctrineServiceProvider(), $app['mysql-db.options']);
 
 // Initiate Twig within the application for tempalte rendering
 $app->register(new TwigServiceProvider(), array(
@@ -38,8 +38,13 @@ $app->register(new TwigServiceProvider(), array(
 $app->register(new Moust\Silex\Provider\CacheServiceProvider(), array(
     'cache.options' => array(
         'filesystem' => array(
-            'driver' => 'file',
-            'cache_dir' => './tmp'
+            'driver' => 'redis',
+            'redis' => function() use ($app) {
+                $redisOptions = $app['redis-cache.options'];
+                $redis = new \Redis();
+                $redis->connect($redisOptions['host'], $redisOptions['port']);
+                return $redis;
+            }
         )
     )
 ));

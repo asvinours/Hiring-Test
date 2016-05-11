@@ -83,7 +83,7 @@ abstract class BaseModel
      * 
      * @throw \Exception
      */
-    private function checkMandatoryFields()
+    protected function checkMandatoryFields()
     {
         if (empty($this->tableName)) {
             throw new \Exception('The tableName parameter is mandatory');    
