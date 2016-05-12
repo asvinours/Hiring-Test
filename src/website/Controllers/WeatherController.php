@@ -25,7 +25,12 @@ class WeatherController
         // Render it
 
         $weatherRepository = new Weather($app);
-        $forecast = $weatherRepository->retrieveForecast(45.5088400, -73.5878100);
+        try {
+            $forecast = $weatherRepository->retrieveForecast(45.5088400, -73.5878100);
+        } catch(\Exception $ex) {
+            $forecast = false;
+            error_log("something wrong happened with the forecast: " . $ex->getMessage());
+        }
 
         // Render the page
         return $app['twig']->render(
