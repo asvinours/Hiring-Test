@@ -2,16 +2,20 @@
 namespace SSENSE\HiringTest\Controllers;
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 use SSENSE\HiringTest\Models\Weather;
+use Symfony\Component\HttpFoundation\Request;
 
-class WeatherController 
+/**
+ * Class WeatherController
+ * @package SSENSE\HiringTest\Controllers
+ */
+class WeatherController
 {
     /**
      * Display the weather forecast
-     * 
+     *
      * @param Application $app
-     * @param Request $request 
+     * @param Request $request
      */
     public function forecastAction(Application $app, Request $request)
     {
@@ -19,16 +23,16 @@ class WeatherController
         // Store the json result in Redis
         // Return the content
         // Render it
-        
+
         $weatherRepository = new Weather($app);
         $forecast = $weatherRepository->retrieveForecast(45.5088400, -73.5878100);
-        
+
         // Render the page
         return $app['twig']->render(
-            'weather/forecast.html', 
+            'weather/forecast.html',
             [
                 'forecast' => $forecast,
-                'styles' => [ '/assets/css/weather.css' ],
+                'styles' => ['/assets/css/weather.css'],
             ]
         );
     }

@@ -2,7 +2,7 @@
 
 return [
     'routing.routes' => [
-        
+
         // Homepage
         'homepage' => [
             'pattern' => '/',

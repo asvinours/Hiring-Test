@@ -4,18 +4,18 @@
 // php install/import-data.php --filename data/categories.json --filename data/currencies.json --filename data/countries.json --filename data/products.json --filename data/stocks.json --filename data/prices.json
 $debug = true;
 // Check for the args passed to the script
-$options= getopt(null, [
+$options = getopt(null, [
     'filename:'
 ]);
 $files = isset($options['filename']) ? $options['filename'] : [];
 if (empty($files)) {
-   println("You need to specify at least one file to import"); 
+    println("You need to specify at least one file to import");
 }
 if (!is_array($files)) {
-   $files = [$files]; 
+    $files = [$files];
 }
 
-// First we need to conenct to the DB
+// First we need to connect to the DB
 try {
     $mysqli = new mysqli('localhost', 'root', '', 'ssense-test');
     if (mysqli_connect_errno()) {
@@ -35,9 +35,9 @@ foreach ($files as $file) {
     $path = normalizeFilePath($file);
     $data = getFileContent($path);
     $table = getTableNameFromFile($path);
-    
+
     try {
-        $mysqli->begin_transaction ();
+        $mysqli->begin_transaction();
         $query = "INSERT INTO `%s` (`%s`) VALUES ('%s');";
         foreach ($data as $entity) {
             $keys = array_keys($entity);
@@ -49,7 +49,7 @@ foreach ($files as $file) {
         $res = $mysqli->commit();
         if (!$res) {
             $error = $mysqli->error;
-            throw new \Exception("Unable to commit transaction: " . $error); 
+            throw new \Exception("Unable to commit transaction: " . $error);
         }
     } catch (\Exception $ex) {
         println("Unable to run the commit query");
@@ -61,23 +61,31 @@ foreach ($files as $file) {
 }
 
 
-
 /*
  * Functions
  *
 */
 
+/**
+ * @param $file
+ * @return mixed
+ * @throws Exception
+ */
 function getTableNameFromFile($file)
 {
     $info = pathinfo($file);
-    
+
     if (empty($info['filename'])) {
         throw new \Exception("Unable to extract table name from file");
     }
-    
+
     return $info['filename'];
 }
 
+/**
+ * @param $file
+ * @return string
+ */
 function normalizeFilePath($file)
 {
     // check if the file path start by a /
@@ -85,37 +93,50 @@ function normalizeFilePath($file)
         // Assume it is a relative path
         return dirname(__FILE__) . $file;
     }
-    
+
     return $file;
 }
 
+/**
+ * @param $path
+ * @return bool
+ * @throws Exception
+ */
 function verifyFile($path)
 {
     if (!file_exists($path) || !is_readable($path)) {
-        throw new \Exception("Unable to open the following file: ".$path);
+        throw new \Exception("Unable to open the following file: " . $path);
     }
-    
+
     return true;
 }
 
+/**
+ * @param $path
+ * @return mixed
+ * @throws Exception
+ */
 function getFileContent($path)
 {
     // Verify we can read the file
     $res = verifyFile($path);
-    
+
     // get the content and decode it
     $jsonContent = file_get_contents($path);
     $data = json_decode($jsonContent, true);
-    
-    if(!$data) {
+
+    if (!$data) {
         throw new \Exception("Invalid JSON data");
     }
-    
+
     // return the array
     return $data;
 }
 
+/**
+ * @param $line
+ */
 function println($line)
 {
-    echo $line.PHP_EOL;
+    echo $line . PHP_EOL;
 }

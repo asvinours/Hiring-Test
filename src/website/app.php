@@ -1,9 +1,9 @@
 <?php
+use Igorw\Silex\ConfigServiceProvider;
+use MJanssen\Provider\RoutingServiceProvider;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
-use Igorw\Silex\ConfigServiceProvider;
-use MJanssen\Provider\RoutingServiceProvider;
 
 // Display all errors: should be on to prove that you are writing good code!
 error_reporting(E_ALL);
@@ -43,7 +43,7 @@ $app->register(new Moust\Silex\Provider\CacheServiceProvider(), array(
     'caches.options' => array(
         'redis' => array(
             'driver' => 'redis',
-            'redis' => function() use ($app) {
+            'redis' => function () use ($app) {
                 $redisOptions = $app['cache.options'];
                 $redis = new \Redis();
                 $redis->connect($redisOptions['host'], $redisOptions['port']);
