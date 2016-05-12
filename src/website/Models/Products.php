@@ -22,12 +22,15 @@ class Products extends BaseModel
         }
         
         // Execute the query and fetch results
-        $sqlTemplate = 'SELECT * FROM products
+        $sqlTemplate = 'SELECT products.name, products.id, categories.name as "category_name", currencies.format, prices.price, stocks.quantity FROM products
                             JOIN prices ON products.id = prices.product_id 
                             JOIN countries ON countries.id = prices.country_id 
                             JOIN currencies ON currencies.id = countries.currency_id
-                            JOIN stocks ON stocks.product_id = products.id';
+                            JOIN stocks ON stocks.product_id = products.id
+                            JOIN categories ON categories.id = products.category_id';
         $statement = $this->connexion->executeQuery( $sqlTemplate . ' ' . $where);
+        
+        // fetch results
         $results = $statement->fetchAll();
         
         return $results;

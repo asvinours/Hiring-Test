@@ -1,0 +1,35 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<h2>Weather Forecast</h2>
+
+<div>
+    <!-- <i class="icon-{{ forecast.daily.icon }}"></i> -->
+    <h4>{{ forecast.timezone }} - {{ forecast.daily.summary }}</h4>
+    <table class="forecast_listing">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Summary</th>
+                <th>Temperature</th>
+                <th>Sunrise / Sunset</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in forecast.daily.data %}
+            <tr>
+                <td>{{ day.time|date('m/d/Y', forecast.timezone) }}</td>
+                <td>{{ day.summary }}</td>
+                <td>{{ day.temperatureMin }}&deg;C / {{ day.temperatureMax }}&deg;C</td>
+                <td>{{ day.sunriseTime|date('H:i', forecast.timezone) }} / {{ day.sunsetTime|date('H:i', forecast.timezone) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td>No forecast at the moment</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

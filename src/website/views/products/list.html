@@ -1,0 +1,33 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<h2>Canadien Products</h2>
+
+<table class="products_listing">
+    
+    <thead>
+        <tr class="table_product_header">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+         <tr class="table_product_body">
+             <td>{{ product.id }}</td>
+             <td>{{ product.name }}</td>
+             <td>{{ product.quantity }}</td>
+             <td>{{ product.format|format(product.price) }}</td>
+             <td>{{ product.category_name }} </td>
+         </tr>
+        {% else %}
+             <tr class="table_product_body"> 
+                 <td cols="5">There is no product with canadien currency and stocks</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

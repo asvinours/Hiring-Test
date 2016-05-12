@@ -4,7 +4,13 @@
       <meta charset="utf-8" />
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+      
+      {% if styles is defined and styles %}
+          {% for style in styles %}
+              <link rel="stylesheet" href="{{ app.request.basepath }}{{ style }}" />
+          {% endfor %}
+      {% endif %}
       {% block css_views %}{% endblock %}
   </head>
   
@@ -13,9 +19,9 @@
         <div class="header clearfix">
           <nav>
             <ul class="nav nav-pills pull-right">
-              <li role="presentation" class="active"><a href="/">Home</a></li>
-              <li role="presentation"><a href="#">Canadian Products</a></li>
-              <li role="presentation"><a href="#">Montreal Weather</a></li>
+              <li role="presentation" {{ current_route == 'homepage' ? 'class="active"' : '' }}><a href="{{ path('homepage') }}">Home</a></li>
+              <li role="presentation" {{ current_route == 'products' ? 'class="active"' : '' }}><a href="{{ path('products') }}">Canadian Products</a></li>
+              <li role="presentation" {{ current_route == 'weather' ? 'class="active"' : '' }}><a href="{{ path('weather') }}">Montreal Weather</a></li>
             </ul>
           </nav>
           <h3 class="text-muted">SSENSE - IT</h3>

@@ -2,7 +2,7 @@
 
 // To import all the data in MySQL run the following command:
 // php install/import-data.php --filename data/categories.json --filename data/currencies.json --filename data/countries.json --filename data/products.json --filename data/stocks.json --filename data/prices.json
-$debug = false;
+$debug = true;
 // Check for the args passed to the script
 $options= getopt(null, [
     'filename:'
@@ -37,7 +37,7 @@ foreach ($files as $file) {
     $table = getTableNameFromFile($path);
     
     try {
-        $mysqli->autocommit(false);
+        $mysqli->begin_transaction ();
         $query = "INSERT INTO `%s` (`%s`) VALUES ('%s');";
         foreach ($data as $entity) {
             $keys = array_keys($entity);
@@ -46,7 +46,11 @@ foreach ($files as $file) {
             println($sql);
             $mysqli->query($sql);
         }
-        $mysqli->commit();
+        $res = $mysqli->commit();
+        if (!$res) {
+            $error = $mysqli->error;
+            throw new \Exception("Unable to commit transaction: " . $error); 
+        }
     } catch (\Exception $ex) {
         println("Unable to run the commit query");
         $mysqli->rollback();

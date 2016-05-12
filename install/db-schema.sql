@@ -5,6 +5,15 @@
 -- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- SET FOREIGN_KEY_CHECKS=0;
 
+
+DROP TABLE IF EXISTS `stocks`;
+DROP TABLE IF EXISTS `prices`;
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `countries`;
+DROP TABLE IF EXISTS `currencies`;
+
+
 -- ---
 -- Table 'categories'
 -- 
@@ -51,7 +60,7 @@ CREATE TABLE `currencies` (
 -- ---
 -- Table 'prices'
 -- 
--- ---
+-- --
 
 DROP TABLE IF EXISTS `prices`;
 		

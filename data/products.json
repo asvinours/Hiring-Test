@@ -1,30 +1,30 @@
 {
   "1": {
     "name": "Diesel Black Sweater",
-    "categorie_id": "5"
+    "category_id": "5"
   },
   "2": {
     "name": "Diesel White Jeans",
-    "categorie_id": "4"
+    "category_id": "4"
   },
   "3": {
     "name": "Gucci blue dress",
-    "categorie_id": "6"
+    "category_id": "6"
   },
   "4": {
     "name": "Nike black cap",
-    "categorie_id": "7"
+    "category_id": "7"
   },
   "5": {
     "name": "Diesel Umbrella",
-    "categorie_id": "8"
+    "category_id": "8"
   },
   "6": {
     "name": "Nike brown boots",
-    "categorie_id": "9"
+    "category_id": "9"
   },
   "7": {
     "name": "Gucci red heels",
-    "categorie_id": "10"
+    "category_id": "10"
   }
 }
